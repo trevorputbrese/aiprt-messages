@@ -1,0 +1,257 @@
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4665045258403983075)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (4.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(4665045258403983075)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 127.0.0.1 at 2023-08-28 12:28:44 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PostsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (3.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Load (3.0ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mActionText::RichText Load (4.3ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_type" = $1 AND "action_text_rich_texts"."name" = $2 AND "action_text_rich_texts"."record_id" = $3[0m  [["record_type", "Post"], ["name", "content"], ["record_id", 1]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Count (2.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 5.8ms | Allocations: 827)
+  Rendered posts/_post.html.erb (Duration: 78.1ms | Allocations: 12015)
+  Rendered posts/index.html.erb within layouts/application (Duration: 251.7ms | Allocations: 50206)
+  Rendered layout layouts/application.html.erb (Duration: 645.4ms | Allocations: 151867)
+Completed 200 OK in 717ms (Views: 627.3ms | ActiveRecord: 32.0ms | Allocations: 163930)
+
+
+Started GET "/posts/new" for 127.0.0.1 at 2023-08-28 12:28:53 -0400
+Processing by PostsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/new.html.erb within layouts/application
+  Rendered posts/_form.html.erb (Duration: 18.1ms | Allocations: 4845)
+  Rendered posts/new.html.erb within layouts/application (Duration: 19.7ms | Allocations: 5283)
+  Rendered layout layouts/application.html.erb (Duration: 24.9ms | Allocations: 8014)
+Completed 200 OK in 27ms (Views: 25.5ms | ActiveRecord: 0.0ms | Allocations: 8503)
+
+
+Started POST "/posts" for 127.0.0.1 at 2023-08-28 12:28:57 -0400
+Processing by PostsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "post"=>{"title"=>"test", "content"=>"<div>test</div>"}, "commit"=>"Create Post"}
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/posts_controller.rb:25:in `block in create'
+  [1m[36mPost Create (3.7ms)[0m  [1m[32mINSERT INTO "posts" ("title", "content", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "test"], ["content", nil], ["created_at", "2023-08-28 16:28:57.276200"], ["updated_at", "2023-08-28 16:28:57.276200"]]
+  ↳ app/controllers/posts_controller.rb:25:in `block in create'
+  [1m[36mActionText::RichText Create (2.2ms)[0m  [1m[32mINSERT INTO "action_text_rich_texts" ("name", "body", "record_type", "record_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "content"], ["body", "<div>test</div>"], ["record_type", "Post"], ["record_id", 2], ["created_at", "2023-08-28 16:28:57.337154"], ["updated_at", "2023-08-28 16:28:57.337154"]]
+  ↳ app/controllers/posts_controller.rb:25:in `block in create'
+  [1m[36mActiveStorage::Attachment Load (2.7ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3[0m  [["record_id", 2], ["record_type", "ActionText::RichText"], ["name", "embeds"]]
+  ↳ app/controllers/posts_controller.rb:25:in `block in create'
+  [1m[36mPost Update (1.3ms)[0m  [1m[33mUPDATE "posts" SET "updated_at" = $1 WHERE "posts"."id" = $2[0m  [["updated_at", "2023-08-28 16:28:57.341683"], ["id", 2]]
+  ↳ app/controllers/posts_controller.rb:25:in `block in create'
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/posts_controller.rb:25:in `block in create'
+Redirected to http://127.0.0.1:3000/posts/2
+Completed 302 Found in 91ms (ActiveRecord: 15.2ms | Allocations: 25038)
+
+
+Started GET "/posts/2" for 127.0.0.1 at 2023-08-28 12:28:57 -0400
+Processing by PostsController#show as TURBO_STREAM
+  Parameters: {"id"=>"2"}
+  [1m[36mPost Load (1.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:62:in `set_post'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/show.html.erb within layouts/application
+  [1m[36mComment Count (1.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_post.html.erb:12
+  [1m[36mActionText::RichText Load (1.5ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_id" = $1 AND "action_text_rich_texts"."record_type" = $2 AND "action_text_rich_texts"."name" = $3 LIMIT $4[0m  [["record_id", 2], ["record_type", "Post"], ["name", "content"], ["LIMIT", 1]]
+  ↳ app/views/posts/_post.html.erb:17
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 0.7ms | Allocations: 330)
+  Rendered posts/_post.html.erb (Duration: 11.7ms | Allocations: 2781)
+  [1m[36mComment Load (1.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_comments.html.erb:5
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 31)
+  Rendered comments/_new.html.erb (Duration: 8.9ms | Allocations: 3347)
+  Rendered posts/_comments.html.erb (Duration: 14.4ms | Allocations: 5381)
+  Rendered posts/show.html.erb within layouts/application (Duration: 39.6ms | Allocations: 10233)
+  Rendered layout layouts/application.html.erb (Duration: 44.7ms | Allocations: 12964)
+Completed 200 OK in 53ms (Views: 38.0ms | ActiveRecord: 8.6ms | Allocations: 14956)
+
+
+Started GET "/cable" for 127.0.0.1 at 2023-08-28 12:28:57 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2023-08-28 12:28:57 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vZGVtby9Qb3N0LzI
+Started GET "/posts" for 127.0.0.1 at 2023-08-28 12:29:01 -0400
+Processing by PostsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (1.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Load (1.8ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" IN ($1, $2)[0m  [["post_id", 1], ["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mActionText::RichText Load (2.6ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_type" = $1 AND "action_text_rich_texts"."name" = $2 AND "action_text_rich_texts"."record_id" IN ($3, $4)[0m  [["record_type", "Post"], ["name", "content"], ["record_id", 1], ["record_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Count (1.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 0.5ms | Allocations: 330)
+  Rendered posts/_post.html.erb (Duration: 4.6ms | Allocations: 1596)
+  [1m[36mComment Count (1.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 0.5ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 4.4ms | Allocations: 1426)
+  Rendered posts/index.html.erb within layouts/application (Duration: 22.6ms | Allocations: 6246)
+  Rendered layout layouts/application.html.erb (Duration: 27.4ms | Allocations: 8972)
+Completed 200 OK in 29ms (Views: 19.3ms | ActiveRecord: 8.6ms | Allocations: 9324)
+
+
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"IloybGtPaTh2WkdWdGJ5OVFiM04wTHpJIg==--ea5dff03570f99dd3e31426443828f2c5c31a0a95350a82c4abb9af6d2ed1b32"}
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vZGVtby9Qb3N0LzI
+Started GET "/cable" for 127.0.0.1 at 2023-08-28 12:36:26 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2023-08-28 12:36:26 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Started GET "/" for 127.0.0.1 at 2023-08-28 12:36:26 -0400
+Processing by PostsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (2.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Load (1.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" IN ($1, $2)[0m  [["post_id", 1], ["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mActionText::RichText Load (2.6ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_type" = $1 AND "action_text_rich_texts"."name" = $2 AND "action_text_rich_texts"."record_id" IN ($3, $4)[0m  [["record_type", "Post"], ["name", "content"], ["record_id", 1], ["record_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Count (1.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 3.0ms | Allocations: 827)
+  Rendered posts/_post.html.erb (Duration: 39.0ms | Allocations: 9505)
+  [1m[36mComment Count (1.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 0.8ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 5.1ms | Allocations: 1645)
+  Rendered posts/index.html.erb within layouts/application (Duration: 166.1ms | Allocations: 41949)
+  Rendered layout layouts/application.html.erb (Duration: 258.3ms | Allocations: 82080)
+Completed 200 OK in 298ms (Views: 232.9ms | ActiveRecord: 33.5ms | Allocations: 92462)
+
+
+Started GET "/" for 127.0.0.1 at 2023-08-28 16:03:36 -0400
+Processing by PostsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (1.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Load (1.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" IN ($1, $2)[0m  [["post_id", 1], ["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mActionText::RichText Load (3.2ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_type" = $1 AND "action_text_rich_texts"."name" = $2 AND "action_text_rich_texts"."record_id" IN ($3, $4)[0m  [["record_type", "Post"], ["name", "content"], ["record_id", 1], ["record_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Count (3.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 2.8ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 15.3ms | Allocations: 1429)
+  [1m[36mComment Count (2.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 1.0ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 6.4ms | Allocations: 1426)
+  Rendered posts/index.html.erb within layouts/application (Duration: 83.6ms | Allocations: 8325)
+  Rendered layout layouts/application.html.erb (Duration: 108.2ms | Allocations: 10977)
+Completed 200 OK in 115ms (Views: 110.7ms | ActiveRecord: 30.0ms | Allocations: 11291)
+
+
+Started GET "/posts" for 127.0.0.1 at 2023-08-28 16:14:53 -0400
+Processing by PostsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (1.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Load (6.7ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" IN ($1, $2)[0m  [["post_id", 1], ["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mActionText::RichText Load (1.7ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_type" = $1 AND "action_text_rich_texts"."name" = $2 AND "action_text_rich_texts"."record_id" IN ($3, $4)[0m  [["record_type", "Post"], ["name", "content"], ["record_id", 1], ["record_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Count (1.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 3.1ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 22.4ms | Allocations: 1429)
+  [1m[36mComment Count (1.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 1.3ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 17.1ms | Allocations: 1425)
+  Rendered posts/index.html.erb within layouts/application (Duration: 149.9ms | Allocations: 8052)
+  Rendered layout layouts/application.html.erb (Duration: 179.6ms | Allocations: 10669)
+Completed 200 OK in 182ms (Views: 180.3ms | ActiveRecord: 37.0ms | Allocations: 10954)
+
+
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2023-08-28 16:14:53 -0400
+Started GET "/posts/1" for 127.0.0.1 at 2023-08-28 16:50:15 -0400
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mPost Load (1.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:62:in `set_post'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/show.html.erb within layouts/application
+  [1m[36mComment Count (1.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  [1m[36mActionText::RichText Load (1.1ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_id" = $1 AND "action_text_rich_texts"."record_type" = $2 AND "action_text_rich_texts"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Post"], ["name", "content"], ["LIMIT", 1]]
+  ↳ app/views/posts/_post.html.erb:17
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 1.6ms | Allocations: 330)
+  Rendered posts/_post.html.erb (Duration: 18.0ms | Allocations: 2849)
+  [1m[36mComment Load (1.0ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_comments.html.erb:5
+  Rendered collection of templates [0 times] (Duration: 0.1ms | Allocations: 32)
+  Rendered comments/_new.html.erb (Duration: 41.0ms | Allocations: 4164)
+  Rendered posts/_comments.html.erb (Duration: 47.4ms | Allocations: 6147)
+  Rendered posts/show.html.erb within layouts/application (Duration: 148.6ms | Allocations: 23858)
+  Rendered layout layouts/application.html.erb (Duration: 179.7ms | Allocations: 26600)
+Completed 200 OK in 320ms (Views: 174.8ms | ActiveRecord: 31.0ms | Allocations: 30786)
+
+
+Started GET "/cable" for 127.0.0.1 at 2023-08-28 16:50:15 -0400
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2023-08-28 16:50:15 -0400
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from Z2lkOi8vZGVtby9Qb3N0LzE
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2023-08-28 18:50:24 -0400
+Turbo::StreamsChannel stopped streaming from Z2lkOi8vZGVtby9Qb3N0LzE
+Started GET "/" for 127.0.0.1 at 2023-08-28 19:46:54 -0400
+Processing by PostsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (1.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Load (1.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" IN ($1, $2)[0m  [["post_id", 1], ["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mActionText::RichText Load (1.5ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_type" = $1 AND "action_text_rich_texts"."name" = $2 AND "action_text_rich_texts"."record_id" IN ($3, $4)[0m  [["record_type", "Post"], ["name", "content"], ["record_id", 1], ["record_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Count (1.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 1.2ms | Allocations: 330)
+  Rendered posts/_post.html.erb (Duration: 8.7ms | Allocations: 1598)
+  [1m[36mComment Count (1.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 0.8ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 4.4ms | Allocations: 1426)
+  Rendered posts/index.html.erb within layouts/application (Duration: 64.7ms | Allocations: 8621)
+  Rendered layout layouts/application.html.erb (Duration: 74.3ms | Allocations: 11294)
+Completed 200 OK in 82ms (Views: 76.3ms | ActiveRecord: 21.0ms | Allocations: 11649)
+
+
+Started GET "/" for 127.0.0.1 at 2023-08-28 19:46:55 -0400
+Processing by PostsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.9ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Load (0.9ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" IN ($1, $2)[0m  [["post_id", 1], ["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mActionText::RichText Load (1.1ms)[0m  [1m[34mSELECT "action_text_rich_texts".* FROM "action_text_rich_texts" WHERE "action_text_rich_texts"."record_type" = $1 AND "action_text_rich_texts"."name" = $2 AND "action_text_rich_texts"."record_id" IN ($3, $4)[0m  [["record_type", "Post"], ["name", "content"], ["record_id", 1], ["record_id", 2]]
+  ↳ app/views/posts/index.html.erb:6
+  [1m[36mComment Count (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 0.8ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 4.9ms | Allocations: 1426)
+  [1m[36mComment Count (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/views/posts/_post.html.erb:12
+  Rendered /Users/tputbrese/.rbenv/versions/3.1.4/lib/ruby/gems/3.1.0/gems/actiontext-7.0.2.3/app/views/action_text/contents/_content.html.erb within layouts/action_text/contents/_content (Duration: 1.2ms | Allocations: 291)
+  Rendered posts/_post.html.erb (Duration: 4.7ms | Allocations: 1425)
+  Rendered posts/index.html.erb within layouts/application (Duration: 18.4ms | Allocations: 5797)
+  Rendered layout layouts/application.html.erb (Duration: 23.6ms | Allocations: 8414)
+Completed 200 OK in 25ms (Views: 19.2ms | ActiveRecord: 4.9ms | Allocations: 8703)
+
+

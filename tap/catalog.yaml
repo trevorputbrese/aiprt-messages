@@ -1,0 +1,24 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: aiprt-messages
+  namespace: aiprt
+  description: AIPRT messages App
+  annotations:
+    backstage.io/kubernetes-label-selector: "app.kubernetes.io/part-of=aiprt-messages"
+    backstage.io/techdocs-ref: dir:.
+  tags:
+   - DPD
+   - aiprt
+   - demo
+  links:
+    - url: https://www.dpd.gov
+      title: DPD Home
+      icon: language
+spec:
+  type: service
+  lifecycle: production
+  owner: aiprt-team
+  system: ai-analysis-system
+  consumesApis:
+   - aiprt/aiprt-rest-service-a6c5a207

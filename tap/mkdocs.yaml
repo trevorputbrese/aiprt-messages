@@ -1,0 +1,5 @@
+site_name: 'DPD AIPRT Messsages Demo'
+nav:
+  - Home: index.md
+plugins:
+  - techdocs-core
