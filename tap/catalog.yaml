@@ -21,4 +21,4 @@ spec:
   owner: aiprt-team
   system: ai-analysis-system
   consumesApis:
-   - aiprt/aiprt-rest-service-a6c5a207
+   - aiprt/aiprt-rest-service-6845e3ec
