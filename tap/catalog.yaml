@@ -8,7 +8,7 @@ metadata:
     backstage.io/kubernetes-label-selector: "app.kubernetes.io/part-of=aiprt-messages"
     backstage.io/techdocs-ref: dir:.
   tags:
-   - DPD
+   - dpd
    - aiprt
    - demo
   links:
