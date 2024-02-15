@@ -33,6 +33,6 @@ spec:
      value: some-secret-key-base
   source:
     git:      
-      url: https://github.com/trevorputbrese/rails-7-demo
+      url: https://github.com/trevorputbrese/aiprt-messages
       ref:
         branch: main
